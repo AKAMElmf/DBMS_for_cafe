@@ -1,4 +1,3 @@
-# practice_7-8_bd
+# PHP код для практики 7-8
 
-
-Основные файлы лежат в localhost ---> lib ---> module
+* [Основные файлы](/localhost/lib/module)
