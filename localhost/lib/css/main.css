@@ -1,0 +1,359 @@
+@charset "utf-8";
+ul,li,ol,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input {
+    font-size: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    margin: 0;
+    padding: 0;
+    color: inherit
+}
+
+@font-face {
+    font-family: Roboto-Thin;
+    src: url(/lib/font/Roboto-Thin.woff) format("woff")
+}
+
+@font-face {
+    font-family: Roboto-Light;
+    src: url(/lib/font/Roboto-Light.woff) format("woff")
+}
+
+@font-face {
+    font-family: Roboto-Regular;
+    src: url(/lib/font/Roboto-Regular.woff) format("woff")
+}
+
+@font-face {
+    font-family: Roboto-Bold;
+    src: url(/lib/font/Roboto-Bold.woff) format("woff")
+}
+
+@font-face {
+    font-family: SunlightGothic;
+    src: url(/lib/font/SunlightGothic.woff) format("woff")
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    border: none
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none
+}
+
+input:focus {
+    outline: none
+}
+
+a:visited,a:active {
+    text-decoration: none;
+    color: #000000
+}
+
+a:link {
+    text-decoration: none;
+    color: #000000
+}
+
+a:hover {
+    text-decoration: none;
+    color: rgb(255, 255, 255)
+}
+
+::-moz-selection {
+    background: #39f;
+    color: #fff
+}
+
+::selection {
+    background: #39f;
+    color: #fff
+}
+
+::-webkit-scrollbar {
+    width: 0px
+}
+
+::-webkit-scrollbar-track {
+    background: #dcdcdc
+}
+
+::-webkit-scrollbar-thumb {
+    background: #a9a9a9
+}
+
+::placeholder {
+    color: #000000
+}
+
+.page-con-content { 
+    position: relative;
+    top: 0;
+    width: 100%;
+    min-height: 100%
+}
+
+.page-con-container {
+    position: relative;
+    top: 0;
+    height: auto;
+    margin: auto 60px
+}
+
+.page-in-container {
+    max-width: 1200px;
+    min-height: 60px;
+    margin: 0 auto
+}
+
+.wavebar-con-container-theme {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    display: none
+}
+
+.wavebar-con-container-master {    
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    overflow: hidden
+}
+
+.wavebar-con-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    overflow: hidden
+}
+
+.wavebar-con-wrap { 
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    transition: all 1s ease-in-out 0s
+}
+
+.wavebar-svg-object {   
+    background: url(/img/graphics/svg/wavebar.svg) repeat-x;
+    position: absolute;
+    top: -198px;
+    width: 6144px;
+    height: 198px;
+    animation: 11s cubic-bezier(.36,.45,.63,.53) 0s infinite normal none running wavebar-svg-object;
+    transform: translate3d(0px,0px,0px)
+}
+
+.wavebar-svg-object:nth-of-type(2) { 
+    top: -174px;
+    animation: 11s cubic-bezier(.4,.2,.2,.2) -.124s infinite normal none running wavebar-svg-object,11s ease -1.24s infinite normal none running swell;
+    opacity: 1
+}
+
+
+
+
+
+
+
+
+
+.content-con-outside { 
+    position: relative;
+    max-width: 1220px;
+    height: 100%;
+    margin: 0 auto;
+    z-index: 1
+}
+    
+.content-con-inside {   
+    position: relative;
+    height: 100%;
+    margin-right: 60px;
+    margin-left: 60px
+}
+
+.content-con-backdrop {  
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-135deg,rgb(0,42,135) 25%,rgb(147,64,255) 100%)
+}
+
+
+
+.landing-img-backdrop {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    opacity: .06
+}
+
+.landing-con-main {   
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    max-height: unset;
+    background: #000
+}
+
+.landing-con-override {     
+    position: absolute!important;
+    height: 100%!important;
+    min-height: 100%!important
+}
+
+
+
+.landing-con-container-invert {
+    color: #455971!important
+}
+
+.landing-con-left {
+    position: absolute;
+    left: 0;
+    width: 47%;
+    height: 100%
+}
+
+.landing-con-right {  
+    position: absolute;
+    right: 0;
+    width: 47%;
+    height: 100%;
+    animation-name: fadeInLeft;
+    animation-duration: 1s;
+    animation-iteration-count: 1
+}
+
+
+
+
+.landing-img-hero {   
+    position: absolute;
+    width: 115%;
+    height: 100%;
+    display: block;
+    opacity: .8;
+    left: 140 px;
+}
+
+
+
+
+
+
+.profile {
+    z-index: 100;
+    font-family: Roboto-Bold;
+    font-size: 33px;
+    margin-bottom: -67px;
+    margin-right: 1100px;
+}
+
+.add_employee{
+    color: black;
+}
+
+.add_task{
+    color: black;
+}
+
+.select_tasks{
+    color: black;
+}
+
+.update_tasks{
+    color: black;
+}
+
+.logout{
+    color: black;
+}
+
+
+.select_tasks_form {
+    overflow-wrap: break-word;
+    z-index: 100;
+    font-family: Roboto-Bold;
+    font-size: 20px;
+    margin-bottom: -825px;
+    margin-right: 1385px;
+}
+
+.back{
+    font-size: 36px
+}
+
+.update_tasks_form
+{
+    overflow-wrap: break-word;
+    z-index: 100;
+    font-family: Roboto-Bold;
+    font-size: 20px;
+    margin-bottom: 600px;
+    margin-right: 1385px;   
+}
+
+
+
+.update_task_form
+{
+    overflow-wrap: break-word;
+    z-index: 100;
+    font-family: Roboto-Bold;
+    font-size: 20px;
+    margin-bottom: 150px;
+    margin-right: 1385px;   
+}
+
+
+.add_employee
+{
+    overflow-wrap: break-word;
+    z-index: 100;
+    font-family: Roboto-Bold;
+    font-size: 20px;
+    margin-bottom: -7px;
+    margin-right: 1385px;   
+}
+
+.add_task
+{
+    overflow-wrap: break-word;
+    z-index: 100;
+    font-family: Roboto-Bold;
+    font-size: 20px;
+    margin-bottom: -7px;
+    margin-right: 1385px;   
+}
+
+.otchet_employee_form{
+
+    overflow-wrap: break-word;
+    z-index: 100;
+    font-family: Roboto-Bold;
+    font-size: 23px;
+    margin-bottom: 100px;
+    margin-right: 1385px;   
+}
+
+.search_client{
+
+    overflow-wrap: break-word;
+    z-index: 100;
+    font-family: Roboto-Bold;
+    font-size: 23px;
+    margin-bottom: 100px;
+    margin-right: 1385px;   
+}
