@@ -357,3 +357,13 @@ a:hover {
     margin-bottom: 100px;
     margin-right: 1385px;   
 }
+
+.otchet_task_form{
+
+    overflow-wrap: break-word;
+    z-index: 100;
+    font-family: Roboto-Bold;
+    font-size: 32px;
+    margin-bottom: 100px;
+    margin-right: 1385px;   
+}
