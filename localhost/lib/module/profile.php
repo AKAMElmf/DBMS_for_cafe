@@ -24,6 +24,7 @@ if (!$_SESSION['user']) {
     <?php
     if ($login == "administrator") {
         echo '<a href="vendor/otchet_employee.php">Отчетность по сотрудникам</a>';
+	echo '<a href="vendor/otchet_tasks.php">Отчетность по задачам</a>';
         echo '<a href="add_employee.php" >Добавить работника</a>';
         echo '<a href="vendor/search_client.php" >Поиск клиентов</a>';
     }
