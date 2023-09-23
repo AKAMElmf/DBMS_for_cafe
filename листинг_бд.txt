@@ -1,0 +1,1099 @@
+create table if not exists address
+(
+    address_id serial
+        primary key,
+    zip_code   integer      not null,
+    address    varchar(150) not null
+);
+
+comment on table address is 'Хранит информацию о адресе проживания сотрудника.';
+
+comment on column address.address_id is 'Хранит код адреса.';
+
+comment on column address.zip_code is 'Хранит почтовый индекс сотрудника.';
+
+comment on column address.address is 'Хранит адрес сотрудника.';
+
+alter table address
+    owner to postgres;
+
+create table if not exists cafe_transaction_type
+(
+    cafe_transaction_type_id serial
+        primary key,
+    cafe_transaction_type    varchar(15) not null
+        unique
+);
+
+comment on table cafe_transaction_type is 'Хранит информацию о типах транзакциях (наличные, карта, криптовалюта).';
+
+comment on column cafe_transaction_type.cafe_transaction_type_id is 'Хранит код типа оплаты.';
+
+comment on column cafe_transaction_type.cafe_transaction_type is 'Хранит типы транзакций (наличные, крата, криптовалюта).';
+
+alter table cafe_transaction_type
+    owner to postgres;
+
+create table if not exists contract
+(
+    contract_id           serial
+        primary key,
+    contract_date         date not null,
+    terms_of_the_contract text not null
+);
+
+comment on table contract is 'Хранит информацию о заключенном контракте с сотрудником.';
+
+comment on column contract.contract_id is 'Хранит код контракта.';
+
+comment on column contract.contract_date is 'Хранит дату заключения контракта сотрудника.';
+
+comment on column contract.terms_of_the_contract is 'Хранит описание условий контракта сотрудника.';
+
+alter table contract
+    owner to postgres;
+
+create table if not exists dish_type
+(
+    dish_type_id   serial
+        primary key,
+    dish_type_name varchar(10) not null
+        unique
+);
+
+comment on table dish_type is 'Хранит информацию о типе боюда (еда или напиток).';
+
+comment on column dish_type.dish_type_id is 'Хранит код типа блюда.';
+
+comment on column dish_type.dish_type_name is 'Хранит название типа блюда (еда или вода).';
+
+alter table dish_type
+    owner to postgres;
+
+create table if not exists education
+(
+    education_id             serial
+        primary key,
+    diploma_serie_and_number integer      not null
+        unique,
+    date_of_issue            date         not null,
+    registration_number      integer      not null,
+    specialization           varchar(100) not null
+);
+
+comment on column education.education_id is 'Хранит код образования.';
+
+comment on column education.diploma_serie_and_number is 'Хранит серию и номер дипорма сотрудника. Записывать слитно, без пробелов.';
+
+comment on column education.date_of_issue is 'Хранит дату получения диплома сотрудника.';
+
+comment on column education.registration_number is 'Хранит регистрационный номер диплома сотрудника.';
+
+comment on column education.specialization is 'Хранит специализацию сотрудника исходя из диплома.';
+
+alter table education
+    owner to postgres;
+
+create table if not exists passport
+(
+    passport_id                serial
+        primary key,
+    passport_series_and_number varchar(10)  not null
+        unique,
+    date_of_issue              date         not null,
+    division_code              varchar(7)   not null,
+    issued_by_whom             varchar(100) not null,
+    second_name                varchar(30)  not null,
+    first_name                 varchar(30)  not null,
+    patronymic                 varchar(30),
+    date_of_birth              date         not null,
+    place_of_residence         varchar(150) not null,
+    gender                     smallint     not null
+);
+
+comment on table passport is 'Хранит информацию о паспортных данных сотрудников.';
+
+comment on column passport.passport_id is 'Хранит код паспорта.';
+
+comment on column passport.passport_series_and_number is 'Хранит серию и номер паспорта. Записывается слитно (Первые четыре цифры - серия, другие шесть - номер).';
+
+comment on column passport.date_of_issue is 'Хранит дата выдачи паспорта.';
+
+comment on column passport.division_code is 'Хранит код подразделения.';
+
+comment on column passport.issued_by_whom is 'Хранит информацию об органе, выдавшем паспорт.';
+
+comment on column passport.second_name is 'Хранит фамилию человека.';
+
+comment on column passport.first_name is 'Хранит имя человека';
+
+comment on column passport.patronymic is 'Хранит отчество человека (его может не быть).';
+
+comment on column passport.date_of_birth is 'Хранит дату рожддения человека.';
+
+comment on column passport.place_of_residence is 'Хранит прописку человека по паспорту.';
+
+comment on column passport.gender is 'Хранит пол человека. Указывается цифра (0 - M 1 - Ж).';
+
+alter table passport
+    owner to postgres;
+
+create table if not exists post
+(
+    post_id   serial
+        primary key,
+    post_name varchar(20) not null
+        unique
+);
+
+comment on table post is 'Хранит информацию о всех должностях кафе.';
+
+comment on column post.post_id is 'Хранит код должности.';
+
+comment on column post.post_name is 'Хранит название должности сотрудника.';
+
+alter table post
+    owner to postgres;
+
+create table if not exists schedule
+(
+    schedule_id   serial
+        primary key,
+    schedule_days varchar(30) not null
+        unique
+);
+
+comment on table schedule is 'Хранит информацию о расписанании сотрудников.';
+
+comment on column schedule.schedule_id is 'Хранит код расписания.
+';
+
+comment on column schedule.schedule_days is 'Хранит дни расписания. Пишутся дни недели, когда сотрудник выходит на работу. ';
+
+alter table schedule
+    owner to postgres;
+
+create table if not exists employee
+(
+    employee_id  serial
+        primary key,
+    login        varchar(30) not null
+        unique,
+    phone_number varchar(15) not null
+        unique,
+    email        varchar(30) not null
+        unique,
+    contract_id  integer     not null
+        unique
+        references contract
+            on update restrict on delete restrict,
+    passport_id  integer     not null
+        unique
+        references passport
+            on update restrict on delete restrict,
+    address_id   integer     not null
+        references address
+            on update restrict on delete restrict,
+    education_id integer
+        unique
+        references education
+            on update restrict on delete restrict,
+    post_id      integer     not null
+        references post
+            on update restrict on delete restrict,
+    schedule_id  integer     not null
+        references schedule
+            on update restrict on delete restrict
+);
+
+comment on table employee is 'Хранит информацию о сотрудниках.';
+
+comment on column employee.employee_id is 'Хранит код сотрудника.';
+
+comment on column employee.contract_id is 'Хранит код контракта.';
+
+comment on column employee.passport_id is 'Хранит код паспорта.';
+
+comment on column employee.address_id is 'Хранит код адреса.';
+
+comment on column employee.education_id is 'Хранит код образования.';
+
+comment on column employee.post_id is 'Хранит код должности.';
+
+comment on column employee.schedule_id is 'Хранит код расписания.
+';
+
+alter table employee
+    owner to postgres;
+
+create table if not exists cafe_table
+(
+    table_id       serial
+        primary key,
+    table_capacity smallint not null,
+    employee_id    integer  not null
+        references employee
+            on update restrict on delete restrict
+);
+
+comment on table cafe_table is 'Хранит информацию о столике (вместимость и код бронирования).';
+
+comment on column cafe_table.table_id is 'Хранит код стола.';
+
+comment on column cafe_table.table_capacity is 'Хранит информацию о вместимости стола (количество человек).';
+
+comment on column cafe_table.employee_id is 'Хранит код сотрудника.';
+
+alter table cafe_table
+    owner to postgres;
+
+create table if not exists booking
+(
+    booking_id   serial
+        primary key,
+    booking_date timestamp not null,
+    table_id     integer   not null
+        references cafe_table
+            on update restrict on delete restrict
+);
+
+comment on table booking is 'Хранит информацию о бронировании столика посетителем.';
+
+comment on column booking.booking_id is 'Хранит код бронирования.';
+
+comment on column booking.booking_date is 'Хранит дату и время бронирования столика.';
+
+comment on column booking.table_id is 'Хранит код стола.';
+
+alter table booking
+    owner to postgres;
+
+create table if not exists client
+(
+    client_id    serial
+        primary key,
+    client_name  varchar(30),
+    phone_number varchar(14)
+        unique,
+    email        varchar(30)
+        unique,
+    booking_id   integer
+        unique
+        references booking
+            on update restrict on delete restrict,
+    table_id     integer
+        references cafe_table
+            on update restrict on delete restrict
+);
+
+comment on table client is 'Хранит информацию о посетителях.';
+
+comment on column client.client_id is 'Хранит код клиента.';
+
+comment on column client.phone_number is 'Хранит номер телефона посетителя.';
+
+comment on column client.email is 'Хранит электронную почту посетителя.';
+
+comment on column client.booking_id is 'Хранит код бронирования.';
+
+comment on column client.table_id is 'Хранит код стола.';
+
+alter table client
+    owner to postgres;
+
+create table if not exists cafe_order
+(
+    order_id                 serial
+        primary key,
+    check_amount             integer   not null,
+    transaction_date_time    timestamp not null,
+    client_id                integer   not null
+        references client
+            on update restrict on delete restrict,
+    table_id                 integer
+        references cafe_table
+            on update restrict on delete restrict,
+    cafe_transaction_type_id integer   not null
+        references cafe_transaction_type
+            on update restrict on delete restrict
+);
+
+comment on table cafe_order is 'Хранит информацию о заказах посетителей.';
+
+comment on column cafe_order.order_id is 'Хранит код заказа.';
+
+comment on column cafe_order.check_amount is 'Харнит сумма заказа. Указывается в рублях. Если число не целок, то округляется в пользу посетителя.';
+
+comment on column cafe_order.transaction_date_time is 'Хранит дату и время оплаты заказа.';
+
+comment on column cafe_order.client_id is 'Хранит код клиента.';
+
+comment on column cafe_order.table_id is 'Хранит код стола.';
+
+comment on column cafe_order.cafe_transaction_type_id is 'Хранит код типа оплаты.';
+
+alter table cafe_order
+    owner to postgres;
+
+create table if not exists dish
+(
+    dish_id                serial
+        primary key,
+    dish_name              varchar(30) not null
+        unique,
+    dish_description       text        not null,
+    serving_size           integer     not null,
+    dish_nutritional_value smallint    not null,
+    dish_price             smallint    not null,
+    dish_type_id           integer     not null
+        references dish_type
+            on update restrict on delete restrict,
+    employee_id            integer     not null
+        references employee
+            on update restrict on delete restrict
+);
+
+comment on table dish is 'Хранит информацию о блюдах (цена, размер порции, калорийность).';
+
+comment on column dish.dish_id is 'Хранит код блюда.';
+
+comment on column dish.dish_name is 'Хранит название блюда.';
+
+comment on column dish.dish_description is 'Хранит описание блюда.';
+
+comment on column dish.serving_size is 'Хранит размер порции в граммах или в миллилитрах.';
+
+comment on column dish.dish_nutritional_value is 'Хранит калорийность блюда в ккал.';
+
+comment on column dish.dish_price is 'Хранит цену блюда. Указывается целое число в рублях за порцию.';
+
+comment on column dish.dish_type_id is 'Хранит код типа блюда.';
+
+comment on column dish.employee_id is 'Хранит код сотрудника.';
+
+alter table dish
+    owner to postgres;
+
+create table if not exists cafe_order_dish
+(
+    order_id integer not null
+        references cafe_order
+            on update restrict on delete restrict,
+    dish_id integer not null
+        references dish
+            on update restrict on delete restrict
+);
+
+comment on table cafe_order_dish is 'Таблица для связи М-М (Блюдо - Заказ).';
+
+comment on column cafe_order_dish.order_id is 'Хранит код заказа.';
+
+comment on column cafe_order_dish.dish_id is 'Хранит код блюда.';
+
+alter table cafe_order_dish
+    owner to postgres;
+
+create table if not exists shipment
+(
+    shipment_id           serial
+        primary key,
+    shipment_company_name varchar(50) not null,
+    shipment_date         timestamp   not null
+);
+
+comment on table shipment is 'Хранит информацию о поставке продуктов (название поставщика, дату поставки).';
+
+comment on column shipment.shipment_id is 'Хранит код поставки.';
+
+comment on column shipment.shipment_company_name is 'Хранит название поставщика.';
+
+comment on column shipment.shipment_date is 'Хранит дату и время поставки.';
+
+alter table shipment
+    owner to postgres;
+
+create table if not exists ingredient
+(
+    ingredient_id    serial
+        primary key,
+    ingredient_name  varchar(30) not null,
+    ingredient_price integer     not null,
+    expiration_date  date        not null,
+    shipment_id      integer     not null
+        references shipment
+            on update restrict on delete restrict
+);
+
+comment on table ingredient is 'Хранит информацию о продуктах, использующиеся в блюдах.';
+
+comment on column ingredient.ingredient_id is 'Хранит код продукта.';
+
+comment on column ingredient.ingredient_name is 'Хранит название продукта.';
+
+comment on column ingredient.ingredient_price is 'Хранит цену продукта. Указывается целое число рублей за килограмм.';
+
+comment on column ingredient.expiration_date is 'Храниит срок годности продукта. Указывается дата, когда продукт будет считаться просроченным.';
+
+comment on column ingredient.shipment_id is 'Хранит код поставки.';
+
+alter table ingredient
+    owner to postgres;
+
+create table if not exists dishe_from_ingredients
+(
+    dish_id       integer not null
+        references dish
+            on update restrict on delete restrict,
+    ingredient_id integer not null
+        references ingredient
+            on update restrict on delete restrict
+);
+
+comment on table dishe_from_ingredients is 'Таблица для связи М-М (Блюдо - Продукт).';
+
+comment on column dishe_from_ingredients.dish_id is 'Хранит код блюда.';
+
+comment on column dishe_from_ingredients.ingredient_id is 'Хранит код продукта.';
+
+alter table dishe_from_ingredients
+    owner to postgres;
+
+insert into post (post_name)
+values ('Manager'),
+       ('Cook'),
+       ('Barista'),
+       ('Waiter');
+
+insert into education (diploma_serie_and_number, date_of_issue, registration_number, specialization)
+values (1216,'2012-02-11',152647,'Specialist in the development and implementation of vision systems'),
+       (1326,'2012-04-23',951439,'Cook'),
+       (1417,'2012-06-22',984325,'Barista'),
+       (1218,'2012-05-12',154328,'Barista'),
+       (1728,'2012-09-07',756193,'Barista');
+
+insert into schedule (schedule_days)
+values ('Tuesday, Thursday'),
+       ('Monday, Wednesday'),
+       ('Friday, Sunday'),
+       ('Wednesday, Saturday');
+
+insert into address (zip_code, address)
+values (0004, 'Japan, Ootemachi'),
+       (0006, 'Japan, Yuurakuchou'),
+       (0102, 'Japan, Okata'),
+       (0212, 'Japan, Habuminato'),
+       (0401, 'Japan, Wakagou'),
+       (0402, 'Japan, Honson'),
+       (1213, 'Japan, Oyama'),
+       (1511, 'Japan, Mitsune');
+
+insert into contract (contract_date, terms_of_the_contract)
+values ('2015-04-12','The world continues to generate anger and sadness. And there is no doubt that this is natural when both sides are trying to justify their actions'),
+       ('2015-05-12','1.Protect the cafe 2.Serve visitors'),
+       ('2015-05-12','1.Serve visitors 2.Serve visitors'),
+       ('2015-09-06','1.Serve visitors'),
+       ('2015-09-25','1.Serve visitors 2.Protect the cafe'),
+       ('2015-10-10','1.Serve visitors'),
+       ('2015-08-10','1.Serve visitors'),
+       ('2015-05-12','1.Serve visitors');
+
+insert into passport (passport_series_and_number, date_of_issue, division_code, issued_by_whom, second_name, first_name, date_of_birth, place_of_residence, gender)
+values ('4554895236','2001-02-12','122142','Department of Internal Affairs of Ootemachi district of Japan','Owl','Yoshimura','1987-06-22','Japan, Ootemachi',0),
+       ('4554456123','2000-01-25','122111','Department of Internal Affairs of Yuurakuchou district of Japan','Enji','Koma','1986-01-13','Japan, Yuurakuchou',0),
+       ('4554785394','2002-04-15','122042','Department of Internal Affairs of Okata district of Japan','Kaya','Irimi','1981-11-23','Japan, Okata',1),
+       ('4554996452','2004-06-04','122001','Department of Internal Affairs of Habuminato district of Japan','Kaneki','Ken','1987-05-12','Japan, Habuminato',0),
+       ('4554113254','2003-05-21','122017','Department of Internal Affairs of Wakagou district of Japan','Nishiki','Nishio','1982-08-06','Japan, Wakagou',0),
+       ('4554786254','2001-11-08','122155','Department of Internal Affairs of Mitsune district of Japan','Renji','Yomo','1983-04-11','Japan, Mitsune',0);
+
+insert into passport (passport_series_and_number, date_of_issue, division_code, issued_by_whom, second_name, first_name, patronymic, date_of_birth, place_of_residence, gender)
+values ('4554143256','2005-02-12','122142','Department of Internal Affairs of Honson district of Japan','Roma','Hoito','Clown','1990-08-15','Japan, Honson',1),
+       ('4554956012','2000-02-12','122142','Department of Internal Affairs of Oyama district of Japan','Touka','Kirishima','Rabbit','1986-11-03','Japan, Oyama',1);
+
+insert into employee (login, phone_number, email, contract_id, passport_id, address_id, education_id, post_id,
+                      schedule_id)
+values ('yoshimura1987','+81345102539','yoshimura@anteiku.com',1,1,1,1,1,1),
+       ('koma_-_','+81451324987','koma@anteiku.com',2,2,2,2,2,3),
+       ('3irimi3','+81465231798','irimi@anteiku.com',3,3,3,3,4,4),
+       ('zxckanekizxc','+81655498774','kaneki@anteiku.com',4,4,4,4,4,2),
+       ('111nishiki111','+81886214861','nishiki@anteiku.com',5,5,5,5,3,1);
+
+insert into employee (login, phone_number, email, contract_id, passport_id, address_id, post_id,
+                      schedule_id)
+ values     ('roma993','+81657832591','roma@anteiku.com',6,7,6,4,1),
+            ('qwetoukaqwe','+81785541320','touka@anteiku.com',7,8,7,4,2),
+            ('renji051','+81798813208','renji@anteiku.com',8,6,8,3,4);
+
+insert into cafe_table (table_capacity, employee_id)
+values (4,3),
+       (4,6),
+       (4,3),
+       (4,3),
+       (4,6),
+       (6,6),
+       (6,3),
+       (6,7),
+       (6,6),
+       (6,7);
+
+insert into booking (booking_date, table_id)
+values ('2022-03-11 12:00:00',1),
+       ('2022-03-11 13:00:00',3),
+       ('2022-03-11 14:00:00',6),
+       ('2022-03-11 15:00:00',8),
+       ('2022-03-11 16:00:00',10);
+
+insert into client (client_name, phone_number, email, booking_id, table_id)
+values ('George','+79151564515','egorzxc@yandex.ru',1,1),
+       ('Max','+79264563526','max24@gmail.com',2,3),
+       ('Anthony','+79991259516','antonl03@yandex.ru',3,6),
+       ('Jessica','+79263549881','jessica@gmail.com',4,8),
+       ('Kate','+79151558595','kate123@yandex.ru',5,10);
+
+insert into client (client_name, phone_number, email, table_id)
+values ('Julia','+79996541213','julia@yandex.ru',2),
+       ('Alex','+79266541315','alex@gmail.com',5),
+       ('Betty','+79166542978','betty@yandex.ru',9);
+
+insert into dish_type (dish_type_name)
+values ('Meal'),
+       ('Water');
+
+insert into dish (dish_name, dish_description, serving_size, dish_nutritional_value, dish_price, dish_type_id,
+                  employee_id)
+values ('Espresso','A method of making coffee by passing hot water under pressure through a filter with ground coffee', 200,6,90,2,6),
+       ('Americano','A method of making coffee consisting in combining a certain amount of hot water and espresso', 400,60,210,2,6),
+       ('Сappuccino','Coffee drink of Italian cuisine based on espresso with the addition of warmed foamed milk', 400,600,210,2,7),
+       ('Latte','A milk-based coffee drink, which is a three-layer mixture of foam, milk and espresso coffee', 400,660,210,2,3),
+       ('Raf','A coffee drink made by adding steamed cream with a small amount of foam to one serving of espresso', 400,600,210,2,6),
+       ('Mocha','Arabica coffee, named after the port city of Moha in Yemen', 400,1320,210,2,6),
+       ('Black tea','A type of tea that undergoes complete fermentation for two weeks to a month', 400,600,210,2,7),
+       ('Green tea','Tea subjected to minimal fermentation', 400,0,210,2,3),
+       ('Matcha latte','Matcha latte has more natural caffeine and antioxidants, unlike its traditional counterpart', 400,183,210,2,3),
+       ('Ham and om roll','Ham roll in an omelet', 340,362,450,1,7),
+       ('Ham and cheese sandwich','A ham and cheese sandwich can be a great snack along with our coffee', 302,183,400,1,3),
+       ('Chicken and pesto roll','Delicious appetizer with our coffee', 300,523,300,1,6);
+
+insert into cafe_transaction_type (cafe_transaction_type)
+values ('Cash'),
+       ('Card'),
+       ('Cryptocurrency');
+
+insert into cafe_order (check_amount, transaction_date_time, client_id, table_id, cafe_transaction_type_id)
+values (610,'2022-03-11 12:34:23',1,1,2),
+       (210,'2022-03-11 13:20:45',2,3,2),
+       (210,'2022-03-11 14:23:11',3,6,1),
+       (1010,'2022-03-11 15:42:33',4,8,3),
+       (610,'2022-03-11 16:35:55',5,10,2),
+       (210,'2022-03-11 15:40:22',6,2,2),
+       (210,'2022-03-11 12:10:15',7,5,2),
+       (90,'2022-03-11 14:18:03',8,9,2);
+
+ALTER SEQUENCE cafe_order_order_id_seq restart WITH 1;
+
+insert into shipment (shipment_company_name, shipment_date)
+values ('Tasty Coffee','2022-01-10 10:30:00'),
+       ('Nestle','2022-01-10 10:30:00'),
+       ('Craftfoods','2022-01-10 10:30:00'),
+       ('Montana','2022-01-10 10:30:00'),
+       ('ShokoladBar','2022-01-10 10:30:00'),
+       ('Qamcore Group','2022-01-10 10:30:00'),
+       ('Barilla','2022-01-10 08:00:00'),
+       ('Silk','2022-01-10 09:00:00'),
+       ('Evian','2022-01-10 07:00:00');
+
+insert into ingredient (ingredient_name, ingredient_price, expiration_date, shipment_id)
+values ('Coffee beans',1000, '2024-01-01', 1),
+       ('Sauce Pesto',1500, '2024-01-05', 7),
+       ('Matcha Tea Powder',800, '2023-11-06', 3),
+       ('Cheese',1500, '2023-08-12', 4),
+       ('Ham',600, '2023-09-13', 6),
+       ('Pita and other bread',500, '2023-07-14', 2),
+       ('Tea',500, '2023-12-15', 6),
+       ('Milk',500, '2023-01-15', 8),
+       ('Mayonnaise',750, '2023-01-15', 7),
+       ('Cocoa',900, '2023-01-15', 5),
+       ('Wather',600, '2023-01-15', 9);
+
+ALTER SEQUENCE ingredient_ingredient_id_seq restart WITH 1;
+
+
+insert into dishe_from_ingredients (dish_id, ingredient_id)
+values (1,1),
+       (2,1),
+       (2,11),
+       (3,1),
+       (3,11),
+       (3,8),
+       (4,1),
+       (4,11),
+       (4,8),
+       (5,1),
+       (5,8),
+       (5,11),
+       (6,1),
+       (6,8),
+       (6,10),
+       (7,7),
+       (7,11),
+       (8,7),
+       (8,11),
+       (9,8),
+       (9,3),
+       (10,5),
+       (10,6),
+       (11,5),
+       (11,6),
+       (11,4),
+       (12,2),
+       (12,6),
+       (12,4);
+
+insert into cafe_order_dish (order_id, dish_id)
+values (1,3),
+       (1,11),
+       (2,2),
+       (3,4),
+       (4,5),
+       (4,11),
+       (4,11),
+       (5,6),
+       (5,11),
+       (6,7),
+       (7,8),
+       (8,1);
+
+
+
+
+
+
+
+
+
+-- функции, триггеры и тд.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- удалеение просроченных проудктов(триггер)
+CREATE OR REPLACE FUNCTION check_expired_ingredient()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+ DELETE FROM ingredient WHERE CURRENT_DATE >= expiration_date;
+ RETURN NEW;
+END;
+$$;
+CREATE OR REPLACE TRIGGER check_expired_ingredient
+AFTER INSERT OR UPDATE ON ingredient
+
+FOR EACH ROW EXECUTE PROCEDURE check_expired_ingredient();
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--автоматизация подсчета суммы заказа (функция)
+CREATE OR REPLACE FUNCTION sum_order(id_of_order int)
+    RETURNS integer
+    LANGUAGE plpgsql
+AS
+$$
+DECLARE
+    buffer integer = 0;
+    sum integer = 0;
+    cnt integer = 0;
+begin
+    cnt := count(*) from cafe_order_dish where cafe_order_dish.order_id = id_of_order ;
+    for i in 0..cnt-1 loop
+    buffer := dish_price FROM dish WHERE dish_id = (select cafe_order_dish.dish_id from cafe_order_dish where cafe_order_dish.order_id = id_of_order limit 1 offset i);
+    sum = sum + buffer;
+    end loop;
+    RETURN sum;
+end;
+$$;
+
+-- тест
+select sum_order(4);
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- автоматизация обновление суммы заказа по номеру заказа(процедура)
+CREATE OR REPLACE PROCEDURE update_order_check_by_id(id_of_order int)
+language plpgsql
+as $$
+    DECLARE
+        sum integer := 0;
+
+begin
+        sum:=sum_order(id_of_order);
+    update cafe_order set check_amount = sum where order_id = id_of_order;
+end;
+$$;
+
+-- test
+call update_order_check_by_id(8);
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- процедура рандомного заполнения поставок
+CREATE OR REPLACE PROCEDURE zapolneniye_random(amount integer)
+language plpgsql
+as $$
+DECLARE
+    buffer_rand varchar(20);
+begin
+    for i in 0..amount-1 loop
+        buffer_rand:= shipment_company_name FROM shipment where shipment_id in(1,2,3,4,5,6,7,8,9) ORDER BY RANDOM() LIMIT 1;
+        insert into shipment (shipment_company_name, shipment_date) values
+                                                                        (buffer_rand,timestamp '2015-01-10' +
+                                                                                        ceil(random()*10)/10 * (timestamp '2015-01-20' - timestamp '2020-01-10'));
+        end loop;
+end;
+$$;
+
+-- добаваление заказа (транзакция)
+CREATE OR REPLACE PROCEDURE add_order(id_of_client integer, id_of_table integer,id_of_transaction_type integer, dishes_id integer[])
+language plpgsql
+as $$
+DECLARE
+id_of_order integer;
+count integer:=0;
+begin
+    count := array_length(dishes_id,1);
+    insert into cafe_order(check_amount,transaction_date_time, client_id, table_id, cafe_transaction_type_id)
+    values (0,current_timestamp,id_of_client,id_of_table,id_of_transaction_type);
+    id_of_order:= max(order_id) from cafe_order;
+        for i in 1..count loop
+            insert into cafe_order_dish(order_id, dish_id) values (id_of_order, dishes_id[i]);
+        end loop;
+    call update_order_check_by_id(id_of_order);
+    commit;
+end;
+$$;
+
+--тест
+
+call add_order(add_client(1),1,1,array [1,2,3,4]);
+
+
+-- добаваление  клиента (функция)
+CREATE OR REPLACE FUNCTION add_client(id_of_table integer)
+    RETURNS integer
+    LANGUAGE plpgsql
+AS
+$$
+DECLARE
+    id_of_client integer;
+begin
+    insert into client(table_id) values (id_of_table);
+    id_of_client:= max(client_id) from client;
+    RETURN id_of_client;
+end;
+$$;
+
+-- тест
+select add_client(4);
+
+--заполнения
+call zapolneniye_random(491);
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ALTER SEQUENCE shipment_shipment_id_seq restart WITH 10;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- индексация
+create index address_idx on address(zip_code);
+create index booking_idx on booking(table_id);
+create index cafe_order_idx on cafe_order(check_amount);
+create index cafe_table_idx on cafe_table(table_capacity);
+create index client_idx on client(phone_number, email, client_name);
+create index contract_idx on contract(contract_date);
+create index dish_idx on dish(dish_name);
+create index education_idx on education(diploma_serie_and_number);
+create index employee_idx on employee(login, email, phone_number);
+create index ingredient_idx on ingredient(ingredient_name, ingredient_price);
+create index passport_idx on passport(passport_series_and_number);
+create index schedule_idx on schedule(schedule_days);
+create index shipment_idx on shipment(shipment_company_name, shipment_date);
+
+drop index shipment_idx;
+
+-- тест индексации на выборке из 500 кортежей
+explain(analyse,buffers, costs off, verbose ) select *from shipment where shipment_company_name = 'Craftfoods';
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- представления
+
+-- Вывод заказов с суммой>500
+CREATE OR REPLACE VIEW view_orders_by_check_amount AS SELECT * FROM cafe_order WHERE check_amount>500;
+-- тест
+select *from view_orders_by_check_amount;
+
+-- Вывод поставок после 2020 года
+CREATE OR REPLACE VIEW view_shipment_by_date AS SELECT * FROM shipment WHERE shipment_date > '2020-01-01';
+-- тест
+select *from view_shipment_by_date;
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-- Роли
+
+CREATE ROLE administrator WITH LOGIN ENCRYPTED PASSWORD '8702d3720958d388d9c9865651004908' superuser ;
+CREATE ROLE manager WITH LOGIN ENCRYPTED PASSWORD '0c374ac962588df9cee22a45dd1e2c39';
+CREATE ROLE cook WITH LOGIN ENCRYPTED PASSWORD 'a9eb079ff5659d588643e9480beb8226';
+CREATE ROLE barista WITH LOGIN ENCRYPTED PASSWORD 'cdc0589dd7cd18362e85934fd24e6acb';
+CREATE ROLE waiter WITH LOGIN ENCRYPTED PASSWORD 'd5673fd16abc4db8fdb28f4b5d2afc82';
+
+
+--пароли
+select *from pg_authid;
+
+
+GRANT ALL PRIVILEGES ON all tables in schema public to administrator;
+
+--insert
+GRANT insert ON table booking,cafe_table, cafe_order, cafe_order_dish, client,shipment,ingredient TO manager;
+GRANT insert ON table ingredient, dish, dishes_from_ingredients to cook;
+GRANT insert ON table ingredient, dish, dishes_from_ingredients to barista;
+GRANT insert ON table cafe_table, client, booking to waiter;
+
+--update
+GRANT update ON table booking,cafe_table, cafe_order, cafe_order_dish, client,shipment,ingredient,employee TO manager;
+GRANT update ON table ingredient, dish, dishes_from_ingredients to cook;
+GRANT update ON table ingredient, dish, dishes_from_ingredients to barista;
+GRANT update ON table cafe_table, client to waiter;
+
+--select
+GRANT select ON table booking, cafe_table, cafe_order, cafe_order_dish, client,shipment, ingredient, employee TO manager;
+GRANT select ON table ingredient, dish, dishes_from_ingredients to cook;
+GRANT select ON table ingredient, dish, dishes_from_ingredients to barista;
+GRANT select ON table booking, cafe_table, client, cafe_order, cafe_order_dish to waiter;
+GRANT select (employee_id, login, post_id) ON table employee to cook, barista, waiter;
+
+--RLS
+ALTER TABLE address ENABLE ROW LEVEL SECURITY;
+ALTER TABLE booking ENABLE ROW LEVEL SECURITY;
+ALTER TABLE cafe_order ENABLE ROW LEVEL SECURITY;
+ALTER TABLE cafe_order_dish ENABLE ROW LEVEL SECURITY;
+ALTER TABLE cafe_table ENABLE ROW LEVEL SECURITY;
+ALTER TABLE client ENABLE ROW LEVEL SECURITY;
+ALTER TABLE contract ENABLE ROW LEVEL SECURITY;
+ALTER TABLE dish ENABLE ROW LEVEL SECURITY;
+ALTER TABLE dishes_from_ingredients ENABLE ROW LEVEL SECURITY;
+ALTER TABLE education ENABLE ROW LEVEL SECURITY;
+ALTER TABLE employee ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ingredient ENABLE ROW LEVEL SECURITY;
+ALTER TABLE passport ENABLE ROW LEVEL SECURITY;
+ALTER TABLE post ENABLE ROW LEVEL SECURITY;
+ALTER TABLE schedule ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ingredient ENABLE ROW LEVEL SECURITY;
+ALTER TABLE shipment ENABLE ROW LEVEL SECURITY;
+
+--------------------------------------------------------------
+
+-- Официант
+CREATE POLICY policy_Waiter_full_access ON cafe_table FOR ALL TO waiter USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Waiter_full_access ON client FOR ALL TO waiter USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Waiter_full_access ON booking FOR ALL TO waiter USING
+(true);
+CREATE POLICY policy_Waiter_full_access ON cafe_order FOR select TO waiter USING
+(true);
+CREATE POLICY policy_Waiter_full_access ON cafe_order_dish FOR select TO waiter USING
+(true);
+CREATE POLICY policy_Waiter_check_post_id ON employee FOR select TO waiter USING
+(employee.login = current_user);
+
+
+-- Бариста
+CREATE POLICY policy_Barista_full_access ON ingredient FOR ALL TO barista USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Barista_full_access ON dish FOR ALL TO barista USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Barista_full_access ON dishes_from_ingredients FOR ALL TO barista USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Barista_check_post_id ON employee FOR select TO barista USING
+(employee.login = current_user);
+
+
+-- Повар
+CREATE POLICY policy_Cook_full_access ON ingredient FOR ALL TO cook USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Cook_full_access ON dish FOR ALL TO cook USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Cook_full_access ON dishes_from_ingredients FOR ALL TO cook USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Cook_check_post_id ON employee FOR select TO cook USING
+(employee.login = current_user);
+
+
+-- Манагер
+CREATE POLICY policy_Manager_full_access ON booking FOR ALL TO manager USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Manager_full_access ON cafe_table FOR ALL TO manager USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Manager_full_access ON cafe_order FOR ALL TO manager USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Manager_full_access ON cafe_order_dish FOR ALL TO manager USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Manager_full_access ON client FOR ALL TO manager USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Manager_full_access ON shipment FOR ALL TO manager USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Manager_full_access ON ingredient FOR ALL TO manager USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Manager_update_emp ON employee FOR update to manager USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Manager_select_emp ON employee FOR select to manager USING
+(true);
+
+
+
+
+-- У админа все права + может добавлять сотрудников
+CREATE POLICY policy_Admin_full_access ON employee FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON education FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON passport FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON schedule FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON address FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON contract FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON post FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON shipment FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON dish FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON dishes_from_ingredients FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON ingredient FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON booking FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON cafe_table FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+CREATE POLICY policy_Admin_full_access ON client FOR ALL TO administrator USING
+(true) WITH CHECK (true);
+
+
+
+--------------------------------------------------------test
+insert into passport(passport_series_and_number, date_of_issue, division_code, issued_by_whom, second_name, first_name, patronymic, date_of_birth, place_of_residence, gender)
+values(123123,'2020-01-01',123,'sdfasfsfsdf','Test','TesTest','TestTestTest','2020-01-01','asdasdaSddasasd',0);
+
+insert into contract (contract_date, terms_of_the_contract) values ('2020-01-01','ASDASDasdASDasdasdjasdasdjasd');
+
+insert into education(diploma_serie_and_number, date_of_issue, registration_number, specialization) values (213123123,'2020-01-01', 123,'aSDASDasdasd');
+
+------------------------------------------------------------
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+--вспомогательные функции для GUI
+
+
+--функция возрващая максимальный айди букинга
+create or replace function return_max_id_booking()
+    returns integer
+    language plpgsql
+as
+$$
+DECLARE
+    id_booking integer = 0;
+begin
+    id_booking:= max(booking_id) from booking;
+    return id_booking;
+end;
+$$;
+
+--test
+select *from return_max_id_booking();
+
+
+
+
+
+
+--сумма заказов за день
+create or replace function return_check_amounts_by_day(orders_date timestamp)
+    returns integer
+    language plpgsql
+as
+$$
+DECLARE
+    orders_date_max timestamp;
+    sum integer:= 0;
+begin
+    orders_date_max:= orders_date+'23:59:59';
+    sum := sum(check_amount) from cafe_order where transaction_date_time >= orders_date and transaction_date_time <= orders_date_max;
+    return sum;
+end;
+$$;
+
+
+--последний добавленый клиент
+create or replace function return_max_id_client()
+    returns integer
+    language plpgsql
+as
+$$
+DECLARE
+    id_client integer = 0;
+begin
+    id_client:= max(client_id) from client;
+    return id_client;
+end;
+$$;
+
+
+select *from return_max_id_client();
+
+
+
+
+
+
+------------------------доп insert
+insert into passport (passport_series_and_number, date_of_issue, division_code, issued_by_whom, second_name, first_name, date_of_birth, place_of_residence, gender)
+values ('4554142654','2005-03-10','122948','Department of Internal Affairs of Balashikha district of Japan','Arnold','Uzumaki','1995-02-23','Japan, Balashikha',0),
+       ('4554482651','2002-04-27','122984','Department of Internal Affairs of Okata district of Japan','Tony','Savin','1992-06-06','Japan, Okata',0),
+       ('4554186059','2001-03-22','122162','Department of Internal Affairs of Jane district of Japan','Max','Zotov','1999-03-14','Japan, Jane',0),
+       ('4554549127','2000-05-18','122056','Department of Internal Affairs of Habuminato district of Japan','Gena','Akame','1986-12-03','Japan, Habuminato',0);
+insert into address (zip_code, address)
+values (1439, 'Japan, Balashikha'),
+       (0006, 'Japan, Okata'),
+       (1512, 'Japan, Jane'),
+       (0212, 'Japan, Habuminato');
+insert into contract (contract_date, terms_of_the_contract)
+values ('2015-09-25','1.Serve visitors 2.Protect the cafe'),
+       ('2015-10-10','1.Make milkshake'),
+       ('2015-08-10','1.Make dishes'),
+       ('2015-05-12','1.Serve visitors');
+insert into education (diploma_serie_and_number, date_of_issue, registration_number, specialization)
+values (4531,'2012-04-23',951439,'Cook'),
+       (4836,'2012-06-22',984325,'Barista'),
+       (0148,'2012-05-12',154328,'Programmer'),
+       (0945,'2012-09-07',756193,'Barista');
+
+
+
+
+
+
+-- создание пользователей
+create user yoshimura1987 with password 'e749c2a00e12f15f324672d07b5d64ce';
+create user koma with password '043532c001dcf4ff5943f009858d202a';
+create user irimi with password '919ecfdf773349bc01de2522d1c546cd';
+create user zxckanekizxc with password '63cf1229ed4c705ee045bc074b443867';
+create user nishiki111 with password 'fb9b8bcb472e61a3ee606f33427b51fb';
+create user roma993 with password 'b9195b8cff0afc17f2c770e737bb5be5';
+create user qwetoukaqwe with password 'f478d0980f2215028662318d2dbc9341';
+create user renji051 with password 'bd51e082875cf240e3e9a15c74da5943';
+
+
